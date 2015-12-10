@@ -21,28 +21,67 @@
 <script type="text/javascript">
 	require(
 	    ['zrender/zrender',
-	    'zrender/shape/Circle'],
-	    function(zrender, CircleShape) {
+	    'zrender/shape/Circle',
+	    'zrender/Group'],
+	    function(zrender, CircleShape, Group) {
 	        // just init to get a zrender Instance
 	        var zr = zrender.init(document.getElementById('box'));
 	        // zr can be used now!
-			zr.addShape(
-			    new CircleShape({
-			        style : {
-			            x : 100,
-			            y : 100,
-			            r : 50,
-			            color : 'rgba(220, 20, 60, 0.8)'
-			        },
-			        draggable : true
-			    })
-			);
-			zr.render();
-		
-
-			zr.on('click', function (p) {
-				alert('click me');
-			});	
+	        var c3 = new CircleShape({
+		        style : {
+		            x : 100,
+		            y : 100,
+		            r : 50,
+		            color : 'rgba(220, 20, 60, 0.8)'
+		        },
+		        zlevel : 3,
+		        draggable : true,
+		        hoverable : true
+		    });
+		    var c2 = new CircleShape({
+		        style : {
+		            x : 100,
+		            y : 100,
+		            r : 50,
+		            color : 'rgba(0, 20, 60, 0.8)'
+		        },
+		        zlevel : 2,
+		        draggable : true,
+		        hoverable : true
+		    });
+			zr.addShape(c3).addShape(c2);
+			// zr.addShape(new TextShape({
+		 //        style: {
+		 //            x: 220,
+		 //            y: 220,
+		 //            color: 'red',
+		 //            text: 'something text'
+		 //        },
+		 //        hoverable: true,
+		 //        zlevel: 2
+		 //    }));
+			
+			// zr.animate(c.id)
+			//   .when(1000, {position : [200, 199]})
+			//   .when(3000, {position : [344, 399]})
+			//   .when(4000, {position : [144, 699]})
+			//   .when(10000, {position : [644, 399]})
+			//   .start('spline');
+			
+		    var g = new Group();
+		    g.position[0] = 400;
+		    g.position[1] = 400;
+		    g.addChild(new CircleShape({
+		        style: {
+		            x: 100,
+		            y: 100,
+		            r: 20,
+		            color : 'rgba(0, 120, 60, 0.8)',
+		            brushType: 'fill'
+		        }
+		    }));
+		    zr.addGroup(g);
+		    zr.render();
 	    }
 	);
 </script>
